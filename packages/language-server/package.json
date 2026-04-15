@@ -1,0 +1,30 @@
+{
+  "name": "@sysml/language-server",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "build": "tsc -b",
+    "clean": "rm -rf dist",
+    "test": "vitest run"
+  },
+  "dependencies": {
+    "@sysml/protocol": "*",
+    "@sysml/ast": "*",
+    "@sysml/utils": "*",
+    "@sysml/parser": "*",
+    "@sysml/semantics": "*",
+    "@sysml/stdlib": "*",
+    "langium": "^3.3.1",
+    "langium-lsp": "^3.3.1",
+    "vscode-languageserver": "^9.0.1",
+    "vscode-languageserver-textdocument": "^1.0.12",
+    "vscode-uri": "^3.0.8"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.0",
+    "vitest": "^4.0.16"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "name": "@sysml/web-app",
+  "version": "0.2.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "tsc -b",
+    "clean": "rm -rf dist"
+  },
+  "dependencies": {
+    "@sysml/protocol": "*",
+    "monaco-editor": "^0.52.2"
+  },
+  "devDependencies": {
+    "typescript": "^5.8.0"
+  }
+}
