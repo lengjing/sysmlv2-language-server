@@ -7,6 +7,7 @@ out/
 *.vsix
 *.tsbuildinfo
 *.log
+.turbo/
 
 # === IDE and OS ===
 .DS_Store

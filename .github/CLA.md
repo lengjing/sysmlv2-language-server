@@ -22,14 +22,13 @@ You hereby grant to Us a perpetual, worldwide, non-exclusive, no-charge, royalty
 
 You hereby grant to Us a perpetual, worldwide, non-exclusive, no-charge, royalty-free, irrevocable patent license to make, have made, use, offer to sell, sell, import, and otherwise transfer Your Contributions, where such license applies only to those patent claims licensable by You that are necessarily infringed by Your Contribution(s) alone or by combination of Your Contribution(s) with the Project.
 
-## 4. Dual-License Acknowledgment
+## 4. License Acknowledgment
 
-You acknowledge that the Project uses a dual-license structure:
+You acknowledge that the Project is licensed under **LGPL-3.0-or-later**.
 
-- **LGPL-3.0-or-later** for grammar and language server packages (`@sysml/grammar`, `@sysml/language-server`)
-- **MIT** for original VPATHAI packages (`@sysml/core`, `@sysml/shim`)
+Packages include: `@sysml/protocol`, `@sysml/ast`, `@sysml/utils`, `@sysml/parser`, `@sysml/semantics`, `@sysml/stdlib`, `@sysml/language-server`.
 
-By signing this Agreement, You agree that Your Contributions may be distributed under either license as appropriate for the package to which the Contribution is made. Contributions to MIT-licensed packages will be MIT-licensed; contributions to LGPL-licensed packages will be LGPL-licensed.
+By signing this Agreement, You agree that Your Contributions will be distributed under the same license as the package to which the Contribution is made.
 
 ## 5. Representations
 

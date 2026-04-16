@@ -6,6 +6,7 @@
   "publisher": "VPATHAI",
   "author": "VPATHAI",
   "license": "LGPL-3.0-or-later",
+  "packageManager": "npm@11.11.0",
   "icon": "media/icon.png",
   "repository": {
     "type": "git",

@@ -47,7 +47,7 @@ async function main() {
         sourcesContent: false,
         platform: 'browser',
         outfile: 'dist/web/extension.js',
-        external: ['vscode'],
+        external: ['vscode', 'path', 'vscode-languageclient/node'],
         logLevel: 'silent',
         plugins: [
             esbuildProblemMatcherPlugin,

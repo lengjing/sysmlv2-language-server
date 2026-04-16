@@ -26,7 +26,7 @@ export interface Disposable {
  * emitter.emit('document:open', { uri: '...' });
  * ```
  */
-export class EventEmitter<TEvents extends Record<string, unknown>> {
+export class EventEmitter<TEvents extends object = Record<string, unknown>> {
     private readonly listeners = new Map<keyof TEvents, Set<EventListener<any>>>();
 
     /**
