@@ -7,8 +7,7 @@
   "types": "dist/index.d.ts",
   "scripts": {
     "build": "tsc -b",
-    "clean": "rm -rf dist",
-    "test": "vitest run"
+    "clean": "rm -rf dist"
   },
   "dependencies": {
     "@sysml/protocol": "*",
@@ -16,15 +15,9 @@
     "@sysml/utils": "*",
     "@sysml/parser": "*",
     "@sysml/semantics": "*",
-    "@sysml/stdlib": "*",
-    "langium": "^3.3.1",
-    "langium-lsp": "^3.3.1",
-    "vscode-languageserver": "^9.0.1",
-    "vscode-languageserver-textdocument": "^1.0.12",
-    "vscode-uri": "^3.0.8"
+    "@sysml/stdlib": "*"
   },
   "devDependencies": {
-    "typescript": "^5.8.0",
-    "vitest": "^4.0.16"
+    "typescript": "^5.8.0"
   }
 }

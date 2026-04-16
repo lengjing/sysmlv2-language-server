@@ -2,10 +2,11 @@
   "name": "vpath-sysml-v2-language-support",
   "displayName": "SysML v2 Language Support",
   "description": "Language support for SysML v2 (Syntax, Validation, LSP).",
-  "version": "0.1.0",
+  "version": "0.2.0",
   "publisher": "VPATHAI",
   "author": "VPATHAI",
   "license": "LGPL-3.0-or-later",
+  "packageManager": "npm@11.11.0",
   "icon": "media/icon.png",
   "repository": {
     "type": "git",
@@ -15,6 +16,10 @@
   "bugs": {
     "url": "https://github.com/vpathai-git/sysmlv2-language-server/issues"
   },
+  "workspaces": [
+    "packages/*",
+    "apps/*"
+  ],
   "engines": {
     "vscode": "^1.90.0"
   },
@@ -86,13 +91,18 @@
         "category": "SysML"
       },
       {
-        "command": "sysml.rescanWorkspace",
-        "title": "Rescan Workspace for SysML Files",
+        "command": "sysml.validateModel",
+        "title": "Validate SysML Model",
         "category": "SysML"
       },
       {
         "command": "sysml.showModel",
         "title": "Show SysML Model Structure",
+        "category": "SysML"
+      },
+      {
+        "command": "sysml.rescanWorkspace",
+        "title": "Rescan Workspace for SysML Files",
         "category": "SysML"
       }
     ],
@@ -135,16 +145,14 @@
   },
   "scripts": {
     "vscode:prepublish": "npm run build:production",
-    "build:sysml-browser": "cd src/packages/language-server && npm run build:browser",
-    "build:sysml-node": "cd src/packages/language-server && npm run build:node",
-    "build:sysml-all": "cd src && npm run build",
-    "build": "npm run build:sysml-all && npm run build:extension",
+    "build:packages": "npx turbo run build",
     "build:extension": "node esbuild.js",
-    "build:production": "cd src && npm run build && cd .. && npm run build:extension -- --production",
+    "build": "npm run build:packages && npm run build:extension",
+    "build:production": "npm run build:packages && npm run build:extension -- --production",
     "watch": "node esbuild.js --watch",
-    "package": "vsce package --no-dependencies",
-    "test:web": "vscode-test-web --browserType=chromium --extensionDevelopmentPath=. --open-devtools ./test-workspace",
-    "test:web:github": "vscode-test-web --browserType=chromium --extensionDevelopmentPath=. --open-devtools --folder-uri=vscode-vfs://github/GfSE/SysML-v2-Models"
+    "test": "npx turbo run test",
+    "clean": "npx turbo run clean",
+    "package": "vsce package --no-dependencies"
   },
   "dependencies": {
     "vscode-languageclient": "^9.0.1"
@@ -152,9 +160,9 @@
   "devDependencies": {
     "@types/node": "20.19.25",
     "@types/vscode": "1.90.0",
-    "@vscode/test-web": "^0.0.78",
     "@vscode/vsce": "2.32.0",
     "esbuild": "0.19.12",
+    "turbo": "^2.5.0",
     "typescript": "5.9.3"
   }
 }

@@ -108,8 +108,8 @@ async function startBrowserClient(
     client = new LanguageClient(
         'sysmlLanguageServer',
         'SysML v2 Language Server',
-        { id: 'sysml-browser-worker', name: 'SysML Worker', moduleUri: serverModule },
-        clientOptions
+        clientOptions,
+        worker
     );
 
     await client.start();
@@ -154,7 +154,7 @@ function registerCommands(
                 return;
             }
 
-            const symbols = await vscodeModule.commands.executeCommand<vscodeModule.DocumentSymbol[]>(
+            const symbols = await vscodeModule.commands.executeCommand<any[]>(
                 'vscode.executeDocumentSymbolProvider',
                 editor.document.uri
             );

@@ -1,1 +1,0 @@
-../../sysml_resources/test-validation-errors.sysml

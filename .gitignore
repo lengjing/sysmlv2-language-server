@@ -7,6 +7,7 @@ out/
 *.vsix
 *.tsbuildinfo
 *.log
+.turbo/
 
 # === IDE and OS ===
 .DS_Store
@@ -14,13 +15,6 @@ out/
 .vscode/
 *.code-workspace
 Thumbs.db
-
-# === Langium Generated Files ===
-src/packages/grammar/src/generated/
-src/packages/grammar/dist/
-src/packages/language-server/dist/
-src/extension/shim/dist/
-src/packages/core/out/
 
 # === Python ===
 __pycache__/
@@ -38,11 +32,6 @@ __pycache__/
 .env.*
 *.pem
 *.key
-
-# === Test Files ===
-test*.sysml
-simple-test.sysml
-*.cr
 
 # === VSCode Web Test ===
 .vscode-test-web

@@ -7,8 +7,9 @@
 
 This project provides language support for SysML v2 in VS Code, including:
 - Syntax Highlighting
-- Validation (210+ rules)
+- Validation (plugin-based rule engine)
 - Language Server Protocol (LSP) support
+- Completions, Hover, Definitions, References, Document Symbols
 
 ## Quick Start
 
@@ -16,8 +17,11 @@ This project provides language support for SysML v2 in VS Code, including:
 # Install dependencies
 npm install
 
-# Build the Language Server and Extension
+# Build all packages and extension
 npm run build
+
+# Run tests
+npm run test
 
 # Package the extension
 npm run package
@@ -25,64 +29,55 @@ npm run package
 
 ## Architecture
 
-A fully spec-compliant SysML v2 language server built on [Langium](https://langium.org).
+A modular, layered SysML v2 language toolchain built with TypeScript. See [ARCHITECTURE.md](ARCHITECTURE.md) for detailed design documentation.
 
 ### Project Structure
 
 ```
 sysmlv2-language-server/
-├── src/                          # Source code
-│   ├── packages/                 # Langium workspace packages
-│   │   ├── grammar/              # SysML/KerML grammar definitions
-│   │   ├── core/                 # Tree-Graph model engine (MIT)
-│   │   └── language-server/      # LSP server implementation
-│   └── extension/                # VS Code extension
-│       └── shim/                 # EMF compatibility layer (MIT)
-├── dist/                         # Build output
-├── scripts/                      # Build helper scripts
-└── sysml_resources/              # Syntax highlighting
+├── packages/                     # Core library packages
+│   ├── protocol/                 # Shared types, interfaces, events
+│   ├── ast/                      # AST nodes, identity, traversal, builder
+│   ├── utils/                    # Logger, event emitter, plugin system
+│   ├── parser/                   # SysML/KerML parser with Langium adapter
+│   ├── semantics/                # Symbol table, scope, types, validation
+│   ├── stdlib/                   # Standard library manifest and loading
+│   └── language-server/          # LSP server, document management, features
+├── apps/                         # Applications
+│   ├── extension/                # VSCode extension (LSP client)
+│   └── webApp/                   # Monaco editor + WebSocket client
+├── sysml_resources/              # Syntax highlighting (TextMate grammar)
+├── media/                        # Extension icons
+└── specifications/               # SysML v2 spec examples
 ```
 
----
+### Processing Pipeline
 
-## Scripts Reference
-
-| Script | Description |
-|--------|-------------|
-| `scripts/build_sysml.sh` | Build the SysML language server |
-| `scripts/build_and_install.sh` | Build everything and install VS Code extension |
-| `scripts/run_quiet.sh` | Build with logging (quiet mode for CI) |
-
-```bash
-# Build the language server
-./scripts/build_sysml.sh
-
-# Full build + install extension
-./scripts/build_and_install.sh
+```
+Source Text → Parser → AST Adapter → Semantic Model → Validation → LSP Output
 ```
 
 ---
 
 ## Development Workflow
 
-### Grammar Development
+### Building
 
 ```bash
-# After modifying sysml.langium or kerml.langium
-cd src/packages/grammar
-npx langium generate
+# Build all packages (uses Turborepo)
+npm run build:packages
+
+# Build extension bundle (uses esbuild)
+npm run build:extension
+
+# Full build
+npm run build
 ```
 
-### Extension Development
+### Testing
 
 ```bash
-# Build and install
-./scripts/build_and_install.sh
-
-# Or step by step:
-./scripts/build_sysml.sh
-npm run build:production
-npm run package
+npm run test
 ```
 
 ---
@@ -101,13 +96,14 @@ This project uses a **dual-license** model:
 
 | Package | License | Description |
 |---------|---------|-------------|
-| `@sysml/grammar` | LGPL-3.0-or-later | SysML/KerML grammar definitions |
-| `@sysml/language-server` | LGPL-3.0-or-later | LSP server with validation rules |
-| `@sysml/core` | **MIT** | Tree-Graph model engine (original work) |
-| `@sysml/shim` | **MIT** | EMF compatibility layer (original work) |
+| `@sysml/protocol` | LGPL-3.0-or-later | Shared types and interfaces |
+| `@sysml/ast` | LGPL-3.0-or-later | AST node definitions |
+| `@sysml/utils` | LGPL-3.0-or-later | Utility infrastructure |
+| `@sysml/parser` | LGPL-3.0-or-later | Parser with Langium adapter |
+| `@sysml/semantics` | LGPL-3.0-or-later | Semantic analysis engine |
+| `@sysml/stdlib` | LGPL-3.0-or-later | Standard library management |
+| `@sysml/language-server` | LGPL-3.0-or-later | LSP server implementation |
 | Root extension | LGPL-3.0-or-later | VS Code extension bundle |
-
-The MIT-licensed packages (`@sysml/core`, `@sysml/shim`) are 100% original code by VPATHAI and may be freely used in commercial and closed-source projects.
 
 See [LICENSES/](LICENSES/) for full license texts and [NOTICE](NOTICE) for attribution.
 
