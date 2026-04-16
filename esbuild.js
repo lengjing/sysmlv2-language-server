@@ -19,36 +19,10 @@ const esbuildProblemMatcherPlugin = {
     },
 };
 
-const nodePolyfillPlugin = {
-    name: 'node-polyfill',
-    setup(build) {
-        // Stub browser client for Node build
-        build.onResolve({ filter: /sysml\/browserClient\.js$/ }, args => {
-            return { path: args.path, namespace: 'stub-browser-client' };
-        });
-        build.onLoad({ filter: /.*/, namespace: 'stub-browser-client' }, args => {
-            return { contents: 'export async function startSysMLClient() {}; export async function stopSysMLClient() {};' };
-        });
-    }
-};
-
-const browserPolyfillPlugin = {
-    name: 'browser-polyfill',
-    setup(build) {
-        // Stub Node client for Browser build
-        build.onResolve({ filter: /sysml\/client\.js$/ }, args => {
-            return { path: args.path, namespace: 'stub-node-client' };
-        });
-        build.onLoad({ filter: /.*/, namespace: 'stub-node-client' }, args => {
-            return { contents: 'export async function startSysMLClient() {}; export async function stopSysMLClient() {};' };
-        });
-    }
-};
-
 async function main() {
     // Node Build - outputs to dist/extension.js (matches package.json "main")
     const ctx = await esbuild.context({
-        entryPoints: ['src/extension/extension.ts'],
+        entryPoints: ['apps/extension/src/extension.ts'],
         bundle: true,
         format: 'cjs',
         minify: production,
@@ -60,13 +34,12 @@ async function main() {
         logLevel: 'silent',
         plugins: [
             esbuildProblemMatcherPlugin,
-            nodePolyfillPlugin
         ],
     });
 
     // Web Build - outputs to dist/web/extension.js (matches package.json "browser")
     const webCtx = await esbuild.context({
-        entryPoints: ['src/extension/extension.ts'],
+        entryPoints: ['apps/extension/src/extension.ts'],
         bundle: true,
         format: 'cjs',
         minify: production,
@@ -78,7 +51,6 @@ async function main() {
         logLevel: 'silent',
         plugins: [
             esbuildProblemMatcherPlugin,
-            browserPolyfillPlugin
         ],
     });
 

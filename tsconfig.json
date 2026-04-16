@@ -1,19 +1,15 @@
 {
-  "compilerOptions": {
-    "target": "ES2022",
-    "lib": ["ES2022", "DOM", "WebWorker"],
-    "module": "node16",
-    "moduleResolution": "node16",
-    "strict": true,
-    "esModuleInterop": true,
-    "skipLibCheck": true,
-    "forceConsistentCasingInFileNames": true,
-    "resolveJsonModule": true,
-    "outDir": "./dist",
-    "rootDir": "./src",
-    "sourceMap": true,
-    "declaration": true
-  },
-  "include": ["src/**/*"],
-  "exclude": ["node_modules", "dist", "webview"]
+  "extends": "./tsconfig.base.json",
+  "files": [],
+  "references": [
+    { "path": "packages/protocol" },
+    { "path": "packages/ast" },
+    { "path": "packages/utils" },
+    { "path": "packages/parser" },
+    { "path": "packages/semantics" },
+    { "path": "packages/stdlib" },
+    { "path": "packages/language-server" },
+    { "path": "apps/extension" },
+    { "path": "apps/webApp" }
+  ]
 }

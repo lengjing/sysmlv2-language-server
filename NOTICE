@@ -2,18 +2,14 @@ SysML v2 Language Support for VS Code
 Copyright (c) 2025-2026 VPATHAI
 
 ================================================================================
-Dual-License Structure
+License
 ================================================================================
 
-This project uses a dual-license model:
+This project is licensed under LGPL-3.0-or-later.
 
-  LGPL-3.0-or-later (default)
-    Root extension, @sysml/grammar, @sysml/language-server
-
-  MIT
-    @sysml/core (Tree-Graph model engine)
-    @sysml/shim (EMF compatibility layer)
-    These packages are original work by VPATHAI.
+Packages:
+  @sysml/protocol, @sysml/ast, @sysml/utils, @sysml/parser,
+  @sysml/semantics, @sysml/stdlib, @sysml/language-server
 
 See LICENSES/ for full license texts and individual package LICENSE files.
 
@@ -25,7 +21,7 @@ This project uses the following third-party libraries (all permissive licenses):
 
   Langium (MIT) - https://langium.org
   VS Code Language Client/Server (MIT) - https://github.com/microsoft/vscode-languageserver-node
-  uuid (MIT) - https://github.com/uuidjs/uuid
+  Monaco Editor (MIT) - https://github.com/microsoft/monaco-editor
 
 ================================================================================
 Upstream Projects
@@ -41,9 +37,8 @@ This project incorporates and builds upon the following upstream projects:
     Copyright (c) 2019 Mgnite Inc.
 
     The following components are derived from or based on the Pilot Implementation:
-    - Grammar definitions (src/packages/grammar/src/*.langium) — ported from Xtext to Langium
-    - Standard library (src/packages/language-server/stdlib/) — SysML/KerML standard library files
-    - Validation codes (src/packages/language-server/src/validation/validation-codes.ts)
+    - Standard library files
+    - Validation rule codes and semantics
 
   SysIDE / sysml-2ls (EPL-2.0)
     https://github.com/sensmetry/sysml-2ls

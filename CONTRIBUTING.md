@@ -26,7 +26,7 @@ All contributors must sign our [Contributor License Agreement](.github/CLA.md) b
 
 > I have read the CLA Document and I hereby sign the CLA.
 
-The CLA ensures that the dual-license structure of this project is preserved. See the License Structure section below for details.
+The CLA ensures that the license structure of this project is preserved. See the License Structure section below for details.
 
 ## Pull Request Workflow
 
@@ -53,37 +53,55 @@ Keep pull requests focused on a single change. Provide a clear description of wh
 git clone https://github.com/<your-username>/sysmlv2-language-server.git
 cd sysmlv2-language-server
 
-# Install root dependencies
+# Install dependencies
 npm install
 
-# Build the project
+# Build all packages
 npm run build
+
+# Run tests
+npm run test
 ```
+
+## Project Structure
+
+```
+packages/          # Core library packages
+  protocol/        # Shared types, interfaces, events
+  ast/             # AST nodes, identity, traversal, builder
+  utils/           # Logger, event emitter, plugin system
+  parser/          # SysML/KerML parser with Langium adapter
+  semantics/       # Symbol table, scope, types, validation
+  stdlib/          # Standard library manifest and loading
+  language-server/ # LSP server, document management, features
+apps/              # Applications
+  extension/       # VSCode extension (LSP client)
+  webApp/          # Monaco editor + WebSocket client
+```
+
+See [ARCHITECTURE.md](ARCHITECTURE.md) for detailed design documentation.
 
 ## Code Style
 
 - Write TypeScript following the patterns and conventions already established in the codebase
 - No trailing whitespace
 - Use clear, descriptive names for variables, functions, and types
+- Follow the layered architecture: parser → ast → semantics → language-server
+- No cross-layer violations (e.g., LSP code must not import from parser directly)
 
 ## PR Checklist
 
 Before submitting a PR, ensure:
 
 - [ ] `npm run build` succeeds
+- [ ] `npm run test` passes
 - [ ] No new dependencies with copyleft licenses (GPL, LGPL, AGPL)
 
 ## Adding Validation Rules
 
 1. Reference the relevant SysML v2 specification section
-2. Follow the naming convention in `validation-codes.ts`
-3. Add corresponding validation logic
-
-## Adding Grammar Rules
-
-1. Edit grammar files in `src/packages/grammar/src/`
-2. Run `npx langium generate` to regenerate parser
-3. Never edit files in `src/packages/grammar/src/generated/`
+2. Implement the `ValidationRule` interface in `packages/semantics/src/builtin-rules.ts`
+3. Register the rule via the `ValidationEngine` rule registry
 
 ## Dependency Licenses
 
@@ -93,18 +111,16 @@ All new dependencies MUST use permissive licenses:
 
 ## License Structure
 
-This project uses a dual-license model. When contributing, be aware of which package your changes target:
+This project is licensed under LGPL-3.0-or-later.
 
 | Package | License | Contains |
 |---------|---------|----------|
-| `@sysml/grammar` | LGPL-3.0-or-later | SysML/KerML grammar definitions |
-| `@sysml/language-server` | LGPL-3.0-or-later | LSP server with validation rules |
-| `@sysml/core` | MIT | Tree-Graph model engine (original) |
-| `@sysml/shim` | MIT | EMF compatibility layer (original) |
-
-**Important rules:**
-- Contributions to MIT-licensed packages (`@sysml/core`, `@sysml/shim`) will be MIT-licensed
-- Contributions to LGPL-licensed packages will be LGPL-licensed
-- Each MIT-licensed source file carries an SPDX header: `// SPDX-License-Identifier: MIT`
+| `@sysml/protocol` | LGPL-3.0-or-later | Shared types and interfaces |
+| `@sysml/ast` | LGPL-3.0-or-later | AST node definitions |
+| `@sysml/utils` | LGPL-3.0-or-later | Utility infrastructure |
+| `@sysml/parser` | LGPL-3.0-or-later | Parser with Langium adapter |
+| `@sysml/semantics` | LGPL-3.0-or-later | Semantic analysis engine |
+| `@sysml/stdlib` | LGPL-3.0-or-later | Standard library management |
+| `@sysml/language-server` | LGPL-3.0-or-later | LSP server implementation |
 
 By submitting a contribution, you agree to the terms of the [Contributor License Agreement](.github/CLA.md).
